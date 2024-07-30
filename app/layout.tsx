@@ -3,6 +3,7 @@ import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 import { getSession } from "next-auth/react";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Share My Prompts",
@@ -23,7 +24,7 @@ export default async function RootLayout({
             <div className="gradient" />
           </div>
           <Nav />
-          {children}
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         </Provider>
       </body>
     </html>

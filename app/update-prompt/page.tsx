@@ -39,7 +39,7 @@ const UpdatePrompt = () => {
     }
   }, [promptId]);
 
-  const updatePrompt = async (e: FormEvent<HTMLFormElement>) => {
+  const updateThePrompt = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -71,7 +71,7 @@ const UpdatePrompt = () => {
         post={post}
         setPost={setPost}
         submitting={submitting}
-        handleSubmit={updatePrompt}
+        handleSubmit={updateThePrompt}
       />
     </Suspense>
   );
