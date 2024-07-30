@@ -3,16 +3,17 @@ import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 import { getSession } from "next-auth/react";
-export const metaData: Metadata = {
+
+export const metadata: Metadata = {
   title: "Share My Prompts",
   description: "Share your AI prompts easily",
 };
 
 export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const session = await getSession();
   return (
     <html lang="en">
