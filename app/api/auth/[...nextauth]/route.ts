@@ -1,13 +1,14 @@
+import { NextRequest, NextResponse } from "next/server";
 import User from "@models/user";
 import { connectToDB } from "@utils/database";
-import { NextApiHandler } from "next";
-import NextAuth, { Profile } from "next-auth";
+import NextAuth, { AuthOptions, Profile } from "next-auth";
 import Google from "next-auth/providers/google";
 
 interface GoogleProfile extends Profile {
   picture?: string;
 }
-const handler: NextApiHandler = NextAuth({
+
+const authOptions: AuthOptions = {
   secret: process.env.AUTH_SECRET,
   providers: [
     Google({
@@ -57,6 +58,8 @@ const handler: NextApiHandler = NextAuth({
       return session;
     },
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
