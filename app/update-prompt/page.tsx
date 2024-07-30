@@ -1,8 +1,7 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import Form from "@components/Form";
 
 const UpdatePrompt = () => {
@@ -14,8 +13,6 @@ const UpdatePrompt = () => {
   const [submitting, setIsSubmitting] = useState(false);
 
   const getPromptDetails = async () => {
-    console.log("data");
-
     try {
       const response = await fetch(`/api/prompt/${promptId}`, {
         method: "GET",
@@ -27,8 +24,6 @@ const UpdatePrompt = () => {
       }
 
       const data = await response.json();
-      console.log("data", data[0].prompt);
-
       setPost({
         prompt: data[0].prompt,
         tag: data[0].tag,
@@ -39,9 +34,9 @@ const UpdatePrompt = () => {
   };
 
   useEffect(() => {
-    console.log(promptId);
-
-    getPromptDetails();
+    if (promptId) {
+      getPromptDetails();
+    }
   }, [promptId]);
 
   const updatePrompt = async (e: FormEvent<HTMLFormElement>) => {
@@ -70,13 +65,15 @@ const UpdatePrompt = () => {
   };
 
   return (
-    <Form
-      type="Edit"
-      post={post}
-      setPost={setPost}
-      submitting={submitting}
-      handleSubmit={updatePrompt}
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Form
+        type="Edit"
+        post={post}
+        setPost={setPost}
+        submitting={submitting}
+        handleSubmit={updatePrompt}
+      />
+    </Suspense>
   );
 };
 
